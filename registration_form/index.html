@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Форма регистрации</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form class="sign-in-form test" name="name">
+        <h1>Регистрация</h1>
+        <hr style="border: 1px solid #f1f1f1;margin-bottom: 25px;">
+        <label class="sign-in-form__label"><b>Имя</b><br>
+            <input type="text" id='nam' placeholder="Введите ваше имя" name="name" required maxlength="100">
+        </label>
+        <br>
+        <label class="sign-in-form__label"><b>Дата рождения</b><br>
+            <input type="date" name="birth-date" style= 'color: gray' required>
+        </label>
+        <br>
+        <label class="sign-in-form__label"><b>Логин</b><br>
+            <input type="text" placeholder="Логин должен содержать не менее 6 символов" name="login" required minlength="6">
+        </label>
+        <br>
+        <label class="sign-in-form__label"><b>Пароль</b><br>
+            <input type="password" id='psw' placeholder="Пароль должен содержать не менее 8 символов" name="password" required minlength="8">
+        </label>
+        <br>
+        <label class="sign-in-form__label"><b>Подтверждение пароля</b><br>
+            <input type="password" id='rep-psw' placeholder="Повторите пароль" name="rep-password" required minlength="8">
+        </label>
+        <br>
+        <br>
+        <input id="button" type="submit" class="bad_submit" onclick="alerted()">
+        <br>
+        <br>
+    </form>
+    <script src="test.js"></script>
+</body>
+</html>

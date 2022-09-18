@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import cgi
-
+import html
 from util import Util
 
 form = cgi.FieldStorage()
@@ -10,6 +10,8 @@ action = form.getfirst("action")
 login = form.getfirst("login")
 password = form.getfirst("password")
 
+post = form.getfirst("text", "")
+text = html.escape(post)
 util = Util()
 
 online = util.get_data(util.ONLINE)
@@ -25,15 +27,21 @@ if action == "login":
         error = True
         message = '<p>Такой пользователь не зарегистрирован</p>'
 elif action == "register":
-    util.register(login, password)
-    message = '<p>Вы зарегистрированы и уже авторизованы</p>'
+    if not util.find(login):
+        util.register(login, password)
+        message = '<p>Вы зарегистрированы и уже авторизованы</p>'
+    else:
+        action = "logout"
+        message = '<p>Вы уже зарегистрированы</p>'
+
+elif action == 'posting':
+    util.do_post(user, post)
 elif action == "logout":
     util.logout(user)
     message = "<p>Вы вышли из системы</p>"
 elif not action:
     if not util.is_online(user):
         action = "logout"
-
 
 if action == "logout" or error:
     form = '''
@@ -55,11 +63,17 @@ if action == "logout" or error:
 else:
     form = '''
         <form action="wall.py">
+            <p><b>Расскажите что-нибудь:</b></p>
+            <p><textarea rows="10" cols="45" name="text"></textarea></p>
+            <input type="hidden" name="action" value="posting">
+            <input type="submit" value="Опубликовать">
+            <br>
+        </form>
+        <form action="wall.py">
             <input type="hidden" name="action" value="logout">
             <input type="submit" value="Выйти">
         </form>
     '''
-
 pattern = '''
 <!DOCTYPE HTML>
 <html>
@@ -69,10 +83,11 @@ pattern = '''
 </head>
 <body>
     {form}
+    {posts}
     {message}
 </body>
 </html>
 '''
 
 print('Content-type: text/html\n')
-print(pattern.format(form=form, message=message))
+print(pattern.format(form=form, posts = util.list_of_posts(user), message=message))

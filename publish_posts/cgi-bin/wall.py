@@ -3,7 +3,6 @@
 import cgi
 import html
 from util import Util
-
 form = cgi.FieldStorage()
 action = form.getfirst("action")
 
@@ -45,15 +44,16 @@ elif not action:
 
 if action == "logout" or error:
     form = '''
-        <h1>Авторизуйтесь</h1>
-        <form method="post" action="wall.py">
+        <form method="post" name='main_screen' action="wall.py">
+        <h1>Войти:</h1>
             Логин: <input type="text" name="login">
             Пароль: <input type="password" name="password">
             <input type="hidden" name="action" value="login">
             <input type="submit">
         </form>
-        <h1>Еще не зарегистрированы?</h1>
-        <form method="post" action="wall.py">
+        <br>
+        <form method="post" name='main_screen' action="wall.py">
+        <h1>Регистрация</h1>
             Логин: <input type="text" name="login">
             Пароль: <input type="password" name="password">
             <input type="hidden" name="action" value="register">
@@ -62,14 +62,13 @@ if action == "logout" or error:
     '''
 else:
     form = '''
-        <form action="wall.py">
+        <form name='my_site' action="wall.py">
             <p><b>Расскажите что-нибудь:</b></p>
-            <p><textarea rows="10" cols="45" name="text"></textarea></p>
+            <p><textarea rows="10" cols="180" name="text"></textarea></p>
             <input type="hidden" name="action" value="posting">
             <input type="submit" value="Опубликовать">
-            <br>
         </form>
-        <form action="wall.py">
+        <form name='my_site' action="wall.py">
             <input type="hidden" name="action" value="logout">
             <input type="submit" value="Выйти">
         </form>
@@ -80,11 +79,16 @@ pattern = '''
 <head>
 <meta charset="utf-8">
 <title>Wall</title>
+<link type="text/css" rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-    {form}
-    {posts}
+    <div class='mess'>
     {message}
+    </div>
+    <div class='post'>
+    {posts}
+    </div>
+    {form}
 </body>
 </html>
 '''

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        .sec {
+            background-color: antiquewhite;
+            border: 1px solid #000;
+            margin: 10px;
+            width: 50%;
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+        }
+        .main {
+            border: 2px solid gray;
+            padding: 0 10px;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+        }
+         input[type=text], input[type=number] {
+             width: 98%;
+             padding: 5px;
+             margin: 5px 0 2px 0;
+             display: inline-block;
+             border: none;
+             background: #f1f1f1;
+             border-radius: 5px;
+         }
+         input[type=submit] {
+              background-color: #48D1CC;
+              color: white;
+              padding: 5px 20px;
+              margin: 8px 0;
+              border: none;
+              cursor: pointer;
+              width: 100%;
+              opacity: 0.9;
+              border-radius: 5px;
+         }
+input[type=submit]:hover {
+    background-color: #20B2AA;
+    outline: none;
+}
+    </style>
+</head>
+<body>
+    {#
+        базовый шаблон, который используют остальные шаблоны
+        имеет общую структуру, чтобы не дублировать код
+
+        инициируем блок body, который переопределяется в шаблонах
+    #}
+    {% block body %}{% endblock %}
+</body>
+</html>

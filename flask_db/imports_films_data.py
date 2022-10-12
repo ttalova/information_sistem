@@ -9,7 +9,7 @@ with open("films.json", "r") as f:
 con = psycopg2.connect(
     dbname='flask1_bd',
     user='postgres',
-    password='16042219',
+    password='123456789',
     host='localhost',
     port=5432
 )

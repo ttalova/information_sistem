@@ -93,18 +93,20 @@ def get_film(film_id):
     # если нужный фильм не найден, возвращаем шаблон с ошибкой
     return render_template("error.html", error="Такого фильма не существует в системе")
 
+
 @app.route("/change_mode", methods=['GET', "POST"])
 def change_mode():
     if request.method == "POST":
         resp = make_response(redirect(url_for('films_list')))
         userInput = request.form.get("userInput")
         theme = request.cookies.get('theme')
-        if userInput == 'True' and (theme == 'light' or theme == None) :
+        if userInput == 'True' and (theme == 'light' or theme == None):
             resp.set_cookie('theme', 'dark')
         elif userInput == 'True' and theme == 'dark':
             resp.set_cookie('theme', 'light')
         return resp
     return render_template('films.html')
+
 
 if __name__ == '__main__':
     app.run(port=7000, debug=True, host='localhost')

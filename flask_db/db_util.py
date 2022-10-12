@@ -7,7 +7,7 @@ class Database:
         self.con = psycopg2.connect(
             dbname='flask1_bd',
             user='postgres',
-            password='16042219',
+            password='123456789',
             host='localhost',
             port=5432
         )
@@ -23,6 +23,7 @@ class Database:
             data = data[0]
 
         return data
+
     def insert(self, query):
         self.cur.execute(query)
         # позволяет извлечь все (оставшиеся) строки результата запроса, возвращая их в виде последовательности последовательностей

@@ -2,20 +2,25 @@ body {
     background-color: #373737;
     color: white;
 }
+
 .sec {
     background-color: #808080;
     border: 1px solid #000;
 }
+
 .main {
     border: 2px solid white;
 }
- input[type=text], input[type=number] {
-     background: #D3D3D3;
- }
- input[type=submit], #but {
-      background-color: #808080;
-      color: white;
- }
+
+input[type=text], input[type=number] {
+    background: #D3D3D3;
+}
+
+input[type=submit], #but {
+    background-color: #808080;
+    color: white;
+}
+
 input[type=submit]:hover {
-background-color: black;
+    background-color: black;
 }

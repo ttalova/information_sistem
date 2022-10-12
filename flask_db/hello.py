@@ -98,12 +98,13 @@ def change_mode():
     if request.method == "POST":
         resp = make_response(redirect(url_for('films_list')))
         userInput = request.form.get("userInput")
-        if userInput == 'True':
+        theme = request.cookies.get('theme')
+        if userInput == 'True' and (theme == 'light' or theme == None) :
             resp.set_cookie('theme', 'dark')
-        else:
+        elif userInput == 'True' and theme == 'dark':
             resp.set_cookie('theme', 'light')
         return resp
-    return render_template('sms.html')
+    return render_template('films.html')
 
 if __name__ == '__main__':
     app.run(port=7000, debug=True, host='localhost')

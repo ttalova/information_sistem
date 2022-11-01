@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div type="submit" id='but' class="sec" onclick="location.href = '{{ url_for("films_list") }}'">Главная страница</div>
+
+    <button type="submit" class="sec" id="btn" >Получить фильм</button>
+    <p id="name"></p>
+    <p id="rating"></p>
+    <p id="country"></p>
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script>
+        $('#btn').on('click', function () {
+            // обрабатываем полученные данные с инпутов
+            let data = {}
+            // ajax-запрос
+            $.ajax({
+                url: '{{ url_for('get_random') }}', // добавляем url, откуда будем брать данные
+                method: 'get', // указываем метод
+                dataType: 'html', // тип данных
+                data: data, // данные запроса (в данном случае, там находятся GET-параметры)
+                // функция, которая вызывается при успешном получении данных
+                success: function (data) {
+                    data = JSON.parse(data)
+                    $('#name').html(data['randint']['name'])
+                    $('#rating').html(data['randint']['rating'])
+                    $('#country').html(data['randint']['country'])
+                }
+            })
+        })
+    </script>
+{% endblock %}
+

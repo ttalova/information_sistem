@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request, make_response, session
 import datetime
 from db_util import Database
-
+import random
 # инициализируем приложение
 # из документации:
 #     The flask object implements a WSGI application and acts as the central
@@ -60,8 +60,10 @@ def delete_visits():
 @app.route("/films", methods=['GET', 'POST'])
 def films_list():
     if request.method == 'POST':
+        ids = db.select(f"SELECT * FROM films")
+        id = ids[-1]['id'] + 1
         db.insert(
-            f"INSERT INTO films (id, name, rating, country) VALUES ({request.form.get('id')}, '{request.form.get('name')}', {request.form.get('rating')}, '{request.form.get('country')}')")
+            f"INSERT INTO films (id, name, rating, country) VALUES ({id}, '{request.form.get('name')}', {request.form.get('rating')}, '{request.form.get('country')}')")
 
     films = db.select(f"SELECT * FROM films")
 
@@ -107,6 +109,27 @@ def change_mode():
         return resp
     return render_template('films.html')
 
+@app.route("/add_note", methods=['get', 'post'])
+def add_note():
+    if request.method == "POST":
+        note = request.form.get('note')
+
+        db.cur.execute("INSERT INTO notes(note) VALUES (%s)", (note, ))
+        db.con.commit()
+        return "Note was added"
+
+    return render_template("note.html")
+
+
+# метод для получения данных о рандомном числе
+# здесь мы не рендерим шаблон, отдаем просто контекстк
+@app.route("/random_film")
+def random_film():
+    return render_template("random_film.html")
+@app.route("/get_random", methods=['get'])
+def get_random():
+    return {'randint': random.choice(db.select(f"SELECT * FROM films"))}
 
 if __name__ == '__main__':
     app.run(port=7000, debug=True, host='localhost')
+
